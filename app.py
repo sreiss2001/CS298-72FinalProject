@@ -3,6 +3,7 @@ from flask import Flask,jsonify,request
 from urllib.request import urlopen
 import requests
 import json
+import random
 
 app = Flask(__name__)
 
@@ -11,31 +12,11 @@ def jokeCategories():
 
     url = "https://api.jokes.one/jod/categories?format=json"
 
-    response = requests.get(url)
-    jsondata = response.json()
-
-    # Get the JSON response and store it as a Python dict
+    #Get the JSON response and store it as a Python dict
     my_dictionary = requests.get(url).json()
-    print(json.dumps(my_dictionary, indent=2))
+    my_dictionary["yourNumberTodayIs"] = random.randint(1, 4)
     
-    
-    return "testing"
-
-@app.route("/")
-def jokeCategory():
-
-    url = "https://api.jokes.one/jod/categories?format=json"
-
-    response = requests.get(url)
-    jsondata = response.json()
-
-    # Get the JSON response and store it as a Python dict
-    my_dictionary = requests.get(url).json()
-    print(json.dumps(my_dictionary, indent=2))
-    
-    
-    return "123"
-
+    return json.dumps(my_dictionary, indent=2)
   
 @app.route('/returnjson', methods = ['GET'])
 def ReturnJSON():
