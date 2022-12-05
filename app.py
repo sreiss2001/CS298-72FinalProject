@@ -21,6 +21,21 @@ def jokeCategories():
     
     return "testing"
 
+@app.route("/")
+def jokeCategory():
+
+    url = "https://api.jokes.one/jod/categories?format=json"
+
+    response = requests.get(url)
+    jsondata = response.json()
+
+    # Get the JSON response and store it as a Python dict
+    my_dictionary = requests.get(url).json()
+    print(json.dumps(my_dictionary, indent=2))
+    
+    
+    return "123"
+
   
 @app.route('/returnjson', methods = ['GET'])
 def ReturnJSON():
