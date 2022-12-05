@@ -1,11 +1,25 @@
 from flask import Flask
 from flask import Flask,jsonify,request
+from urllib.request import urlopen
+import requests
+import json
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Chicken or fish for lunch?"
+
+    url = "https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/TESLA?format=json"
+
+    response = requests.get(url)
+    jsondata = response.json()
+
+    # Get the JSON response and store it as a Python dict
+    my_dictionary = requests.get(url).json()
+    #print(json.dumps(my_dictionary, indent=2))
+    
+    
+    return json.dumps(my_dictionary, indent=2)
 
   
 @app.route('/returnjson', methods = ['GET'])
