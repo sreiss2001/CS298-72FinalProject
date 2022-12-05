@@ -7,19 +7,19 @@ import json
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def jokeCategories():
 
-    url = "https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/TESLA?format=json"
+    url = "https://api.jokes.one/jod/categories?format=json"
 
     response = requests.get(url)
     jsondata = response.json()
 
     # Get the JSON response and store it as a Python dict
     my_dictionary = requests.get(url).json()
-    #print(json.dumps(my_dictionary, indent=2))
+    print(json.dumps(my_dictionary, indent=2))
     
     
-    return json.dumps(my_dictionary, indent=2)
+    return "testing"
 
   
 @app.route('/returnjson', methods = ['GET'])
