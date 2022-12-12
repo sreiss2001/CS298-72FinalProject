@@ -9,26 +9,21 @@ app = Flask(__name__)
 
 @app.route("/")
 def jokeCategories():
-
-    url = "https://api.jokes.one/jod/categories?format=json"
-
-    #Get the JSON response and store it as a Python dict
-    my_dictionary = requests.get(url).json()
-    my_dictionary["yourNumberTodayIs"] = random.randint(1, 4)
+    #contains my API key
+    headers = {
+        'X-Api-Key' : '1c81aafe3e504962b5c9c34f2c4c56fb'
+    }
     
-    return json.dumps(my_dictionary, indent=2)
-  
-@app.route('/returnjson', methods = ['GET'])
-def ReturnJSON():
-    if(request.method == 'GET'):
-        data = {
-            "Modules" : 15,
-            "Subject" : "Data Structures and Algorithms",
-        }
-  
-        return jsonify(data)
+    #performs a get request to specified url
+    req = requests.get("https://randommer.io/api/Name?nameType=firstname&quantity=1", headers=headers)
+    req = req.json()
 
-
+    #creates a dictionary which contains the generated random name
+    myDict = {
+        "yourRandomName" : req[0]
+    }
+    
+    return json.dumps(myDict, indent=2)
 
 if __name__ == '__main__':
      app.run (host="0.0.0.0", port=8080)
