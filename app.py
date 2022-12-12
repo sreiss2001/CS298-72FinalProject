@@ -8,22 +8,21 @@ import random
 app = Flask(__name__)
 
 @app.route("/")
-def jokeCategories():
-    #contains my API key
-    headers = {
-        'X-Api-Key' : '1c81aafe3e504962b5c9c34f2c4c56fb'
-    }
-    
-    #performs a get request to specified url
-    req = requests.get("https://randommer.io/api/Name?nameType=firstname&quantity=1", headers=headers)
-    req = req.json()
+def names():
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    ran = random.randint(0, 25)  #generates a random number for picking a letter in the alphabet
 
-    #creates a dictionary which contains the generated random name
-    myDict = {
-        "yourRandomName" : req[0]
+    url = 'https://parseapi.back4app.com/classes/Listofnames_Names_Letter_' + letters[ran] + '?limit=10&keys=Name'
+
+    #contains API keys
+    headers = {
+        'X-Parse-Application-Id': 'kmgrre2d52RDAlPH910iJqEaLILx04Xv9RkW6KmL', 
+        'X-Parse-REST-API-Key': 'S8duwVKoL5kgi487kpFYwPZwBCCYScRlpv0LsFB7' 
     }
+
+    data = json.loads(requests.get(url, headers=headers).content.decode('utf-8'))
     
-    return json.dumps(myDict, indent=2)
+    return json.dumps(data, indent=2)
 
 if __name__ == '__main__':
      app.run (host="0.0.0.0", port=8080)
